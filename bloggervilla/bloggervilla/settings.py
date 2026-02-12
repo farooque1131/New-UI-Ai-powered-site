@@ -187,7 +187,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "farooque8ka@gmail.com"
-EMAIL_HOST_PASSWORD = "groh yeeh dzwz mmjz"
+EMAIL_HOST_PASSWORD = os.environ.get("Email_Pass")
 
 DEFAULT_FROM_EMAIL = "BlogVilla <farooque8ka@gmail.com>"
 
