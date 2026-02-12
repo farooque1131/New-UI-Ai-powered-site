@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block body %}
+{% load socialaccount %}
+    <div class="auth-box">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Join our community of writers and readers</p>
+            </div>
+
+                <a href="{% provider_login_url 'google' %}" class="btn-block google-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" width="18">
+                    Sign up with Google
+                </a>
+        
+
+            <div class="divider-text"><span>OR</span></div>
+
+            <form action="#" method="POST" class="register-form">
+                {% csrf_token %}
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" name="username" placeholder="John Doe" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Min. 8 characters" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" placeholder="Repeat password" required>
+                </div>
+
+                <button type="submit" class="btn-block">Sign Up</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

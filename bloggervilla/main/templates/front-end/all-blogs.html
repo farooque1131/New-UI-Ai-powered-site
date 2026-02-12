@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+<section class="section">
+    <div class="banner-wrapper" style="margin-bottom: 2.5rem;">
+    <img src="{% static "assets/img/highlight.png"%}"
+         alt="Explore Blogs" 
+         style="width: 100%; height: 180px; object-fit: cover; border-radius: 12px; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);">
+</div>
+
+    <form method="GET" action="." class="search-container">
+    <div class="search-box-wrapper">
+        <i class="fa fa-search search-main-icon"></i>
+        <input type="text" name="search" placeholder="Search blogs..." value="{{ search }}" class="search-bar-input">
+        <button type="submit" class="btn-primary search-btn-inner">Search</button>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+        
+        <select name="tag" class="author-chip" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+            {% for tag in all_tags %}
+                <option value="{{ tag.name }}" {% if tag_filter == tag.name %}selected{% endif %}>
+                    {{ tag.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <select name="author" class="author-chip" onchange="this.form.submit()" style="padding: 8px 15px; cursor: pointer;">
+            <option value="">All Authors</option>
+            {% for author in all_authors %}
+                <option value="{{ author.user.id }}" {% if author_filter == author.user.id|stringformat:"s" %}selected{% endif %}>
+                    {{ author.user.username }}
+                </option>
+            {% endfor %}
+        </select>
+
+        {% if tag_filter or author_filter or search %}
+            <a href="?" class="control-btn delete" style="text-decoration: none; padding: 8px 15px;">Clear All</a>
+        {% endif %}
+    </div>
+</form>
+        </div>
+    </div>
+
+    <div class="blog-grid">
+        {% if page_obj %}
+        {% for post in page_obj %}
+        <div class="blog-card">
+            <img src="{{post.post_image.url }}" alt="post">
+            <div class="card-body">
+                <h3>{{post.title}}</h3>
+                <a href="{% url 'post-detail' post.slug %}"><p>{{post.description|striptags|truncatechars:50 }}</p></a>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+    
+   <div class="pagination-container">
+    {% if page_obj.paginator.num_pages > 1 %}
+    <ul class="pagination-list">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link"><i class="fas fa-chevron-left"></i></span>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+                <span class="page-link">{{ num }}</span>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}{% if search %}&search={{ search }}{% endif %}">{{ num }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link"><i class="fas fa-chevron-right"></i></span>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+    {%else%}
+    <div class="no-results-box">
+    <div class="success-icon-wrapper" style="background: #fff1f2;">
+        <i class="fas fa-search-minus" style="color: var(--danger);"></i>
+    </div>
+    <h3>No results found</h3>
+    <p class="auth-subtitle">We couldn't find anything matching "<b>{{ search }}</b>". Try different keywords or clear the filter.</p>
+    <a href="?" class="btn-primary" style="margin-top: 1rem;">View All Posts</a>
+</div>
+    {%endif%}	
+            {% comment %} <button class="btn-login">1</button> <button class="author-chip">2</button> <button class="author-chip">Next</button>
+        </div>
+        {%else%}
+        <h3>Not Found</h3>
+        {%endif%} {% endcomment %}
+</section>
+
+{% endblock%}

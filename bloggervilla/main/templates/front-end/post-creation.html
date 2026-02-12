@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block body %}
+
+<section class="section">
+    <div class="auth-box" style="max-width: 800px; margin: 2rem auto;">
+        <h2 class="section-title" style="border-left: 5px solid var(--primary); padding-left: 15px; margin-bottom: 25px;">
+            Create New Blog Post
+        </h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label for="{{ form.title.id_for_label }}">Post Title <span style="color: var(--danger);">*</span></label>
+                {{ form.title }}
+                {% if form.title.errors %}<span class="error-text">{{ form.title.errors.0 }}</span>{% endif %}
+            </div>
+
+            <div class="grid-2-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="input-group">
+                    <label for="{{ form.slug.id_for_label }}">URL Slug <span style="color: var(--danger);">*</span></label>
+                    {{ form.slug }}
+                </div>
+                <div class="input-group">
+                    <label for="{{ form.post_image.id_for_label }}" required >Featured Image <span style="color: var(--danger);">*</span></label>
+                    {{ form.post_image }}
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="{{ form.tag.id_for_label }}">Tags (Hold Ctrl to select multiple) <span style="color: var(--danger);">*</span></label>
+                {{ form.tag }}
+            </div>
+
+            <div class="input-group ck-editor-container">
+                <label>Post Content <span style="color: var(--danger);">*</span></label>
+                {{ form.description }}
+                {% if form.description.errors %}<span class="error-text">{{ form.description.errors.0 }}</span>{% endif %}
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 15px;">
+                <button type="submit" class="btn-block" style="flex: 2;">Publish Post</button>
+                <a href="{% url 'profile' %}" class="btn-profile-edit" style="flex: 1; text-decoration: none; text-align: center; line-height: 25px;">Discard</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+    {{ form.media }}
+{% endblock %} 

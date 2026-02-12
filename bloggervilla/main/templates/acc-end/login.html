@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block body %}
+{% load socialaccount %}
+    <div class="auth-box">
+        <h2>Login</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn-block">Login</button>
+            <a href="{% provider_login_url 'google' %}" class="btn-block google-btn" style="text-decoration: none;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" width="18">
+                    Sign up with Google
+                </a>
+            <div style="margin-top:15px; text-align:center">
+                <a href="{% url 'password_reset' %}">Forgot Password?</a><br><br>
+                <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+            </div>
+            {% if form.non_field_errors %}
+            <p class="error">{{ form.non_field_errors.0 }}</p>
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}

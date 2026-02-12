@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+<section class="section">
+        <div style="
+    height: 300px; 
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('{% static "assets/img/ai-powered.png" %}'); 
+    background-size: cover; 
+    background-position: center 25%; /* Adjusts vertical focus to show the screen better */
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+">
+    <h2 style="color: white; font-family: sans-serif; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); font-size: 2.5rem; font-weight: 800;">
+        Explore AI Insights
+    </h2>
+</div>
+        <section style="max-width: 1000px; margin: 4rem auto; font-family: 'Inter', 'Segoe UI', Roboto, sans-serif; color: #1e293b; line-height: 1.7; padding: 0 20px;">
+    
+    <div style="text-align: center; margin-bottom: 4rem;">
+        <h2 style="font-size: 2.8rem; font-weight: 800; color: #0f172a; margin-bottom: 1.2rem; letter-spacing: -0.02em;">Discover Blogger Villa</h2>
+        <p style="font-size: 1.2rem; color: #475569; max-width: 800px; margin: 0 auto;">
+            We’ve reimagined the blogging experience by blending creative freedom with high-performance technology. Powered by <strong>Hugging Face AI</strong>, Blogger Villa is built to be fast, secure, and intelligently moderated.
+        </p>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); border-radius: 24px; padding: 3rem; color: white; margin-bottom: 4rem; box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.25);">
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 2rem;">
+            <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 12px;">
+                <i class="fas fa-brain" style="font-size: 1.5rem;"></i>
+            </div>
+            <h3 style="font-size: 1.8rem; margin: 0; font-weight: 700;">Hugging Face AI Integration</h3>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div>
+                <h4 style="font-size: 1.25rem; color: #e0e7ff; margin-bottom: 0.5rem;">✨ Smart Summaries</h4>
+                <p style="color: #e0e7ff; font-size: 1rem; opacity: 0.9;">
+                    Get the gist instantly. Our AI analyzes long-form content and generates a concise summary, allowing readers to grasp key takeaways before diving into the full post.
+                </p>
+            </div>
+            <div>
+                <h4 style="font-size: 1.25rem; color: #e0e7ff; margin-bottom: 0.5rem;">🛡️ Real-time Abuse Detection</h4>
+                <p style="color: #e0e7ff; font-size: 1rem; opacity: 0.9;">
+                    We use advanced NLP models to scan comments for toxicity. This automated safeguard ensures a positive, constructive environment for every creator and reader.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+        
+        <div style="padding: 2rem; background: #ffffff; border: 1px solid #f1f5f9; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <i class="fas fa-pen-nib" style="color: #4f46e5; font-size: 1.5rem; margin-bottom: 1rem;"></i>
+            <h4 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Creative Freedom</h4>
+            <p style="font-size: 0.95rem; color: #64748b;">
+                Express yourself with <strong>CKEditor</strong>. Our professional rich-text editor supports seamless formatting, image embeds, and organized layouts for a polished look.
+            </p>
+        </div>
+
+        <div style="padding: 2rem; background: #ffffff; border: 1px solid #f1f5f9; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <i class="fas fa-layer-group" style="color: #4f46e5; font-size: 1.5rem; margin-bottom: 1rem;"></i>
+            <h4 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Nested Discussions</h4>
+            <p style="font-size: 0.95rem; color: #64748b;">
+                Engage in deep, organized conversations with <strong>Reddit-style threaded comments</strong>. Like your favorite insights and see the best responses rise to the top.
+            </p>
+        </div>
+
+        <div style="padding: 2rem; background: #ffffff; border: 1px solid #f1f5f9; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <i class="fas fa-shield-alt" style="color: #4f46e5; font-size: 1.5rem; margin-bottom: 1rem;"></i>
+            <h4 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Safe & Simple Access</h4>
+            <p style="font-size: 0.95rem; color: #64748b;">
+                Jump in via <strong>OAuth Social Login</strong> or manage your account with our secure <strong>Email Recovery</strong> system, featuring encrypted password reset links.
+            </p>
+        </div>
+
+        <div style="padding: 2rem; background: #ffffff; border: 1px solid #f1f5f9; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <i class="fas fa-id-card" style="color: #4f46e5; font-size: 1.5rem; margin-bottom: 1rem;"></i>
+            <h4 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Personalized Profiles</h4>
+            <p style="font-size: 0.95rem; color: #64748b;">
+                Your <strong>User Profile</strong> is your digital portfolio. Track your posts, manage your bio, and build your unique identity within the Blogger Villa community.
+            </p>
+        </div>
+
+    </div>
+</section>
+    </section>
+{% endblock %}

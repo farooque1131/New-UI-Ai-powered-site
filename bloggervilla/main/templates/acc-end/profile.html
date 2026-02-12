@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="profile-banner" style="background-image: {% if profile.banner %}
+         url('{{ profile.banner.url }}')
+     {% else %}
+         none
+     {% endif %};">
+    {% if is_owner %}
+    <form action="{%url 'profile_edit'%}" method="POST" enctype="multipart/form-data" id="banner-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="update-banner">
+                <input type="file" name="img" id="banner-upload" accept="image/*" style="display: none;" onchange="this.form.submit()">
+                
+                <label for="banner-upload" class="edit-banner-btn">
+                    <i class="fas fa-camera"></i> Edit Banner
+                </label>
+            </form>
+    {%endif%}
+</div>
+
+<div class="profile-container">
+    <div class="profile-main-info">
+        <div class="profile-img-container">
+            <img src="{% if profile.avatar %}
+                {{ profile.avatar.url }}
+            {% else %}
+                none
+            {% endif %}" class="profile-img-large">
+            {% if is_owner %}
+            <form action="{%url 'profile_edit'%}" method="POST" enctype="multipart/form-data" id="avatar-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="update-avatar">
+                <input type="file" name="img" id="avatar-upload" accept="image/*" style="display: none;" onchange="this.form.submit()">
+                
+                <label for="avatar-upload" class="edit-pic-btn">
+                    <i class="fas fa-pen"></i>
+                </label>
+            </form>
+            {%endif%}
+        </div>
+
+        <div class="profile-text">
+            <h1>{{ profile.name }}</h1>
+            <p class="bio-text">{{ profile.bio|default:"No bio added yet." }}</p>
+            
+            <div class="stats-bar-new">
+                <div class="stat-item"><b>{{total_post}}</b> Posts</div>
+                <div class="stat-item"><b>{{total_reaction}}</b> Likes</div>
+                <div class="stat-item"><b>{{total_comment}}</b> Comments</div>
+            </div>
+            {% if is_owner %}
+            <div class="profile-actions">
+    <button class="btn-profile-edit" onclick="toggleModal()">
+        <i class="fas fa-user-edit"></i> Edit Profile
+    </button>
+    <a href="{% url 'post-creation' %}" class="btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+        <i class="fas fa-plus"></i> Create Post
+    </a>
+</div>
+{%endif%}
+
+<div class="modal-overlay" id="editModal">
+    <div class="modal-content-box">
+        <div class="modal-header-flex">
+            <h3>Edit Profile Info</h3>
+            <span class="close-btn" onclick="toggleModal()">&times;</span>
+        </div>
+        
+        <form action="{% url 'profile_edit' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="update_profile">
+            
+            <div class="form-body">
+                {{ form.as_p }}  
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="toggleModal()">Cancel</button>
+                <button type="submit" class="btn-save">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+
+<hr class="section-divider">
+
+
+<section class="section">
+    <h3 class="section-subtitle">User's Posts</h3>
+    <div class="blog-grid">
+        {% if page_obj %}
+        {% for posts in page_obj %}
+        <div class="blog-card">
+            <div class="card-body">
+                <h3>{{posts.title}}</h3>
+                <div class="post-controls">
+                    <a href="{% url 'post-detail' posts.slug %}" class="control-btn view" style="text-decoration:none;">View</a>
+                    {% if is_owner %}
+                    <a href="{% url 'edit-post' posts.slug %}" class="control-btn edit">Edit</a>
+                    <button class="control-btn delete" onclick="return confirm('Delete this post?')">Delete</button>
+                    
+                    {%endif%}
+                    
+                </div>
+                
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+      <div class="pagination-container">
+    {% if page_obj.paginator.num_pages > 1 %}
+    <ul class="pagination-list">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link"><i class="fas fa-chevron-left"></i></span>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+                <span class="page-link">{{ num }}</span>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}{% if search %}&search={{ search }}{% endif %}">{{ num }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link"><i class="fas fa-chevron-right"></i></span>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+    {%else%}
+    <div class="no-results-box">
+    <div class="success-icon-wrapper" style="background: #fff1f2;">
+        <i class="fas fa-search-minus" style="color: var(--danger);"></i>
+    </div>
+    <h3>No Posts yet.</h3>
+</div>
+    {%endif%}	
+</section>
+
+{% endblock %}

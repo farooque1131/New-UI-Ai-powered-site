@@ -1,0 +1,48 @@
+<div class="user-comment {% if comment.parent %}reply{% endif %}">
+    <img src="{{comment.user.profile.avatar.url}}" alt="User">
+
+    <div class="comment-content">
+        <div class="comment-header">
+            <strong>{{ comment.user.username }}</strong>
+            <span class="comment-time">{{ comment.timestamp|timesince }} ago</span>
+
+            {% if comment.user == request.user %}
+                <a href="{% url 'delete_comment' comment.id %}" class="delete-link" onclick="return confirm('Delete comment?')">
+                    <i class="fas fa-trash"></i>
+                </a>
+            {% endif %}
+        </div>
+
+        <p>{{ comment.content }}</p>
+
+        <div class="comment-actions" style="margin-top: 10px; display: flex; gap: 15px;">
+            <button class="text-btn" onclick="toggleElement('reply-form-{{ comment.id }}')">
+                <i class="fas fa-reply"></i> Reply
+            </button>
+            
+            {% if comment.replies.all %}
+            <button class="text-btn show-replies-btn" onclick="toggleElement('replies-{{ comment.id }}')">
+                <i class="fas fa-comments"></i> {{ comment.replies.count }} Replies
+            </button>
+            {% endif %}
+        </div>
+
+        <form method="POST" action="{% url 'add_comment' blog_content.slug %}" 
+              id="reply-form-{{ comment.id }}" class="reply-form" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+            <textarea name="content" placeholder="Write a reply..." rows="2" required></textarea>
+            <button type="submit" class="btn-login btn-small">Post Reply</button>
+        </form>
+
+        {% if comment.replies.all %}
+            <div class="replies-list-container" id="replies-{{ comment.id }}" style="display: none;">
+                <div class="replies-list">
+                    {% for reply in comment.replies.all %}
+                        {% include "partials/comment.html" with comment=reply %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

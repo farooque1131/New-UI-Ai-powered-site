@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="error-container" style="max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ff0000;">
+    <h1>Login Failed</h1>
+    <p>Something went wrong while trying to log you in with Google.</p>
+    <p>Error: {{ auth_error.code }}</p>
+    <a href="/login" class="btn">Try again with Username/Password</a>
+</div>
+{% endblock %}

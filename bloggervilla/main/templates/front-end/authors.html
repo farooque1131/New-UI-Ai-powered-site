@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block body %}
+<section class="section">
+    <div class="header-banner">
+        <h2 class="section-title">Meet Our Authors</h2>
+        <p>The brilliant minds behind Blogger Villa stories.</p>
+    </div>
+
+    <div class="authors-container">
+    {% for author in authors %}
+        <div class="author-card">
+            <div class="author-img-wrapper">
+                {% if author.avatar %}
+                    <img src="{{ author.avatar.url }}" alt="{{ author.user.username }}">
+                {% else %}
+                    <img src="/media/profiles/default-pic.jpg" alt="Default">
+                {% endif %}
+            </div>
+            
+            <div class="author-info">
+                <h5 class="author-name">{{ author.user.username|upper }}</h5>
+                <p class="author-bio">{{ author.bio|default:"No bio yet." }}</p>
+                
+                <div class="author-meta">
+                    <span><i class="fas fa-pen"></i> {{ author.user.posts.count }} Posts</span>
+                    <span><i class="fas fa-heart"></i> {{author.total_likes|default:"0"}} Likes</span>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No authors found.</p>
+    {% endfor %}
+</div>
+</section>
+{% endblock%}

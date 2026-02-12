@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block body %}
+<main class="post-view-container">
+    <header class="post-page-header">
+        <div class="category-tag">
+            {% for t in blog_content.tag.all %}
+                <span class="tag-item">{{ t.name }}</span>
+            {% empty %}
+                Uncategorized
+            {% endfor %}
+        </div>
+        <h1 class="post-main-title">{{blog_content.title}}</h1>
+        <div class="post-meta-info">
+            <img src="{{profile.avatar.url}}" alt="{{profile.name}}" class="author-avatar-small">
+            <span>By <strong>{{blog_content.user.username}}</strong></span>
+            <span class="separator">|</span>
+            <span>{{blog_content.published_date}}</span>
+            <span class="separator">|</span>
+        </div>
+    </header>
+
+    <div class="post-hero-image">
+        <img src="{{blog_content.post_image.url}}" alt="Main Post Image">
+    </div>
+
+    <div class="post-summary-card">
+        <h3>Ai Summary</h3>
+        <p>{{summary}}</p>
+    </div>
+
+    <article class="post-full-content">
+        {{blog_content.description|striptags}}
+    </article>
+
+    <div class="post-actions-bar">
+        <div class="action-group">
+            <button class="action-btn like-btn {% if request.user in blog_content.reaction.all %}active{% endif %}" 
+                id="like-button" data-post-id="{{ blog_content.id }}">
+                <i class="fas fa-heart"></i>
+                <span id="like-count">{{ blog_content.reaction.count }}</span>
+            </button>
+        </div>
+        
+        <div class="action-group">
+            <button class="action-btn share-btn" onclick="copyShareLink()">
+                <i class="fas fa-share-alt"></i> Share
+            </button>
+        </div>
+    </div>
+
+    <div class="content-divider"></div>
+
+    <div class="content-divider"></div>
+
+   <section class="comment-area">
+    <h2 class="section-title">
+        Discussion ({{ blog_content.comments.count }})
+    </h2>
+    
+    <!-- New Comment -->
+    <div class="comment-form-box">
+        <form method="POST" action="{% url 'add_comment' blog_content.slug %}">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Share your thoughts..."></textarea>
+            <button type="submit" class="btn-login">Post Comment</button>
+        </form>
+    </div>
+
+    <!-- Comments -->
+    <div class="comments-list">
+        {% for comment in top_comments %}
+            {% include "partials/comment.html" with comment=comment %}
+        {% empty %}
+            <p>No comments yet. Be the first to comment.</p>
+        {% endfor %}
+    </div>
+</section>
+
+</main>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogger Villa</title>
+    <link rel="stylesheet" href="{% static "assets/style.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+    <a href="{% url 'home' %}"><div class="logo" >Blogger Villa</div></a>
+    <nav class="nav-links" id="nav-menu">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'all-blogs' %}">Blogs</a>
+        <a href="{% url 'about' %}">About</a>
+        {%if user.is_authenticated %}
+        <a href="{% url 'profile' %}">Profile</a>
+        {%endif%}
+        <a href="{% url 'authors' %}">Authors</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn-login">Logout</a>
+        {%else%}
+        <a href="{% url 'login' %}" class="btn-login">Login</a>
+        {%endif%}
+    </nav>
+    <div class="burger" onclick="toggleMenu()">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+</header>
+ <!-- Messages -->
+    {% if messages %}
+    <div id="toast-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} shadow toast-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% block body %} 
+{% endblock %}
+<footer>
+    <div class="footer-container">
+        <div>
+            <h3>Blogger Villa</h3>
+            <p>A place where words find their home. Connect with me on social media.</p>
+        </div>
+        <div class="social-links">
+            <a href="https://github.com/farooque1131" target="_blank">Github</a>
+            <a href="https://www.linkedin.com/in/farooque-shaikh-385345286" target="_blank" >LinkedIn</a>
+            <style>
+    .email-link {
+        position: relative;
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .email-link:hover {
+        color: #7c3aed;
+    }
+
+    /* The Hover Tooltip */
+    .email-link::after {
+        content: "farooque1131@gmail.com";
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1e293b;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Small arrow for tooltip */
+    .email-link::before {
+        content: "";
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: #1e293b;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+    }
+
+    .email-link:hover::after,
+    .email-link:hover::before {
+        opacity: 1;
+        visibility: visible;
+    }
+</style>
+
+<a href="mailto:farooque1131@gmail.com" class="email-link">Email Me</a>
+        </div>
+    </div>
+</footer>
+    {% block extra_scripts %}{% endblock %}
+    <script src="{%static 'assets/main.js'%}"></script>
+</body>
+</html>
