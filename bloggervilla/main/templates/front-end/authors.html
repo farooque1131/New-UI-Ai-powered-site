@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
+{% load static %}
 <section class="section">
     <div class="header-banner">
         <h2 class="section-title">Meet Our Authors</h2>
@@ -13,7 +14,7 @@
                 {% if author.avatar %}
                     <img src="{{ author.avatar.url }}" alt="{{ author.user.username }}">
                 {% else %}
-                    <img src="/media/profiles/default-pic.jpg" alt="Default">
+                    <img src="{% static "assets/img/default-pic.jpg" %}" alt="Default">
                 {% endif %}
             </div>
             
