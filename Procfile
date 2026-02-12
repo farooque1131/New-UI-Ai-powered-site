@@ -1,0 +1,1 @@
+web: gunicorn bloggervilla.wsgi --chdir bloggervilla
