@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_h1-qh=5u^*)7!r4&g-*)1t66tu_=h=w!l*z*9=^e4kyukqfw@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -214,7 +214,7 @@ SOCIALACCOUNT_PROVIDERS = {
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRTE'),
 }
 
 LOGIN_REDIRECT_URL = '/home/'  # Where to go after login
