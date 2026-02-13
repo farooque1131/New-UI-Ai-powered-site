@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'django.contrib.sites',
     'django_ckeditor_5',
     'rest_framework',
@@ -59,8 +61,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', # This is the specific Google provider
-    'cloudinary',
-    'cloudinary_storage',
 ]
 SITE_ID = 1  # <--- AND THIS
 
