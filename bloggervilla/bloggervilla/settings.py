@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 
+
 HF_API_KEY = os.getenv("HF_API_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_h1-qh=5u^*)7!r4&g-*)1t66tu_=h=w!l*z*9=^e4kyukqfw@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -58,6 +59,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', # This is the specific Google provider
+    'cloudinary',
+    'cloudinary_storage',
 ]
 SITE_ID = 1  # <--- AND THIS
 
@@ -148,9 +151,10 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # where collectstatic will gather static files
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_ROOT = BASE_DIR / 'media'
 # this is help in serving image on html
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 AUTH_USER_MODEL = 'accountscore.User'
@@ -205,6 +209,13 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+
+# Use the keys from your Cloudinary Dashboard
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
 
 LOGIN_REDIRECT_URL = '/home/'  # Where to go after login
 LOGOUT_REDIRECT_URL = '/login/'
