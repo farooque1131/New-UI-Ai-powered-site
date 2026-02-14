@@ -149,13 +149,20 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # where collectstatic will gather static files
-STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
 MEDIA_ROOT = BASE_DIR / 'media'
 # this is help in serving image on html
 MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 AUTH_USER_MODEL = 'accountscore.User'
 
