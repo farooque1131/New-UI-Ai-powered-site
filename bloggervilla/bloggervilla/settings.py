@@ -214,7 +214,7 @@ SOCIALACCOUNT_PROVIDERS = {
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRTE'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
 
 LOGIN_REDIRECT_URL = '/home/'  # Where to go after login
