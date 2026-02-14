@@ -2,6 +2,7 @@ from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
 urlpatterns = [
+    path('health/', views.health_check, name='health_check'),
     path('home/',views.home, name='home'),
     path('about/',views.about, name='about'),
     path('post-creation/',views.post_creation, name='post-creation'),
