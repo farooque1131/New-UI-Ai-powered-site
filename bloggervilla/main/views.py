@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.http import HttpResponse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -17,6 +18,10 @@ from django.http import JsonResponse
 from django.db.models import Count
 # Create your views here.
 User = get_user_model
+
+def health_check(request):
+    return HttpResponse("OK", status=200)
+    
 def home(request):
     posts = Post.objects.all().order_by("-published_date")[:6]
 
